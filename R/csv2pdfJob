@@ -1,0 +1,86 @@
+<%
+	if (!is.null(GET$urlCsv)){
+		library(graph);
+		library(grid);
+		library(Rgraphviz);
+		
+		fileToProcess = sprintf("/tmp/metitree-csv2pdf-%s.csv", gsub(":","-",gsub(" ","_", tolower(date()))));
+		fileOutputProcess = sprintf("%s.pdf", fileToProcess);
+		download.file(URLdecode(GET$urlCsv), fileToProcess, method = "auto", quiet=TRUE);
+		
+		pdf(fileOutputProcess, height = 10, width = 10);
+		type = 'nmc:fragments'
+		inchi = GET$title
+		compoundName = GET$compoundname
+		cml <- read.csv(file=fileToProcess,head=TRUE,sep=",")
+		nT <- unique(cml[,"tree"])
+		for(i in nT){
+			p <- which(cml[,"tree"] == i)
+			np <- length(p)
+			graphEx <- matrix(ncol=6,nrow=np);
+			count = 1;
+			for(j in p){
+				graphEx[count,] <- c(cml[j,"node"],cml[j,"parent"],cml[j,"msLevel"],as.character(cml[j,"EF"]),round(cml[j,"mass"], digits = 0), as.character(cml[j,"EF_loss"]));
+				count = count + 1
+			}
+			colnames(graphEx) <- c('node','parent','msLevel','EF','mass','EF_loss')
+			gm<-NULL
+			miniPlotTree <- function(graphEx,level,peak,gm){ 
+				if (graphEx[peak,'msLevel']>1) { 
+					gm <-rbind(gm,c(graphEx[peak,'parent'], graphEx[peak,'node']))
+				}
+				for (b in which((graphEx[,'msLevel']>level) & (graphEx[,'parent'] == graphEx[peak,'node']) )) { 
+					gm <- miniPlotTree(graphEx,graphEx[b,'msLevel'],b,gm) 
+				}
+				return(gm)
+			}
+				
+			nodeNames=NULL
+			nodeLabels=NULL
+			nodeColors=NULL
+			for (a in 1:length(graphEx[,'node'])) {
+				nodeNames <-c(nodeNames, paste(graphEx[a,'node'],sep=''))
+				if(type=='nmc:losses'){
+					nodeLabels <- c(nodeLabels, paste(a,'\n',graphEx[a,'EF_loss'],'\n',graphEx[a,'masslos'],sep=''))
+				}else{
+					nodeLabels <- c(nodeLabels, paste(a,'\n',graphEx[a,'EF'],'\n',graphEx[a,'mass'],sep=''))
+				}
+				
+				if(a == 1 && type=='nmc:losses'){
+					nodeColors <- c(nodeColors, 'black')
+				}else{
+					nodeColors <- c(nodeColors, 'white')
+				}
+			}
+			nodes = list(label = nodeNames)
+			nodes$label[nodeNames]  = nodeLabels
+			nodes$fixedsize[nodeNames] <- TRUE
+			nodes$fill[nodeNames] = nodeColors
+			nodes$height[nodeNames] <- nodes$width[nodeNames] <- 1
+			gm <- miniPlotTree(graphEx,1,1,gm)
+			colnames(gm) = c('fromID','toID')
+			V <- as.character(unique(as.vector(gm)))
+			OG <- new('graphNEL',nodes=V)
+			edgemode(OG) <- 'directed'
+			OG <- addEdge(from=as.character(gm[,'fromID']),to=as.character(gm[,'toID']),graph=OG,weights=1)
+			edgeNames=NULL 
+			edgeLabels=NULL
+			for (a in 2:length(graphEx[,'node'])) { 
+				edgeNames <-c(edgeNames, edgeNames(OG)[a-1])
+				edgeLabels <- c(edgeLabels,graphEx[a,'EF_loss'] )
+			}
+			edges = list(label = edgeNames)
+			nodeRenderInfo(OG) <- list(fill=nodes$fill[nodeNames])
+			attrs <- list(node=list(fixedsize=FALSE))
+			OG <- layoutGraph(OG, nodeAttrs=nodes, attrs=attrs)
+			graph.par(list(graph = list(main = compoundName, sub = inchi, cex.main = 1.8, cex.sub = 1.4)))
+			renderGraph(OG)
+		}
+		dev.off()
+		
+		file.remove(fileToProcess);
+		
+		cat (fileOutputProcess);
+	}
+%>
+

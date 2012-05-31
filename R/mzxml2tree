@@ -1,0 +1,77 @@
+<%
+
+library(xcms);
+library(bitops);
+library(RCurl);
+
+options(digits=20);
+	
+if (!is.null(GET$urlMzxml) || !is.null(GET$mzxml)){
+	
+	fileToProcess = ""
+	
+	if (!is.null(GET$urlMzxml)){
+	
+           tempFileName = sprintf("/tmp/metitree-%s.mzxml", gsub(":","-",gsub(" ","_", tolower(date()))));
+	   download.file(URLdecode(GET$urlMzxml), tempFileName, method = "auto", quiet=TRUE);	
+	   fileToProcess = tempFileName;
+	   
+	} else {
+	   fileToProcess = GET$mzxml;	
+	}
+	
+	xset <- xcmsSet(fileToProcess,method="MS1");	
+	xcmsfrag <- xcmsFragments(xset, mzgap=as.numeric(GET$mzgap)/10, snthresh=as.numeric(GET$snthresh));
+	xr <- xcmsRaw(fileToProcess,includeMSn=TRUE);	
+	
+	for(ss in 1:length(xcmsfrag@peaks[,1])){
+		scan_pos <- which(xr@scantime == xcmsfrag@peaks[ss,4]);
+		scan_pos_msn <- which(xr@msnRt == xcmsfrag@peaks[ss,4]);
+		if(length(scan_pos) > 0){
+			peaks = getScan(xr,scan_pos);
+			ll <- order(peaks[,1]);
+			peaks <- peaks[ll,];
+			massO <- xcmsfrag@peaks[ss,5];
+
+			if(length(ll)==1){
+				xcmsfrag@peaks[ss,5] <- peaks["mz"];
+				xcmsfrag@peaks[ss,6] <- peaks["intensity"];
+			}else{
+				intH <- 0;
+				for(l in 1:length(peaks[,1])){
+					intA <- peaks[l,"intensity"];
+					massA <- peaks[l,"mz"];
+					if(intH < intA){
+						if(massA > massO-0.1 && massA < massO+0.1){
+							xcmsfrag@peaks[ss,5] <- massA;
+							xcmsfrag@peaks[ss,6] <- intA;
+							intH <- intA;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	poMS1 <- which(xcmsfrag@peaks[,"msLevel"] == 1);
+	for(i in poMS1){
+		xcmsfrag@peaks[i,"GroupPeakMSn"] <- i;
+	}
+	for(i in 1:length(xcmsfrag@peaks[,1])){
+		if( length(which(i == poMS1)) == 0){
+			pos = which(xcmsfrag@peaks[,"peakID"] == xcmsfrag@peaks[i,"MSnParentPeakID"]);
+			xcmsfrag@peaks[i,"GroupPeakMSn"] <- xcmsfrag@peaks[pos,"GroupPeakMSn"]
+		}
+	}
+	for(i in 1:length(xcmsfrag@peaks[,1])){
+		for(j in 1:length(xcmsfrag@peaks[1,])){
+			cat(xcmsfrag@peaks[i,j],"\t");
+		}
+		cat("\n");
+	}
+	
+	if (!is.null(GET$urlMzxml)){
+		file.remove(tempFileName);
+	}
+}
+%>
