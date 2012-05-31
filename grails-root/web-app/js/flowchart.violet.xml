@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_20" class="java.beans.XMLDecoder"> 
+ <object class="com.horstmann.violet.product.diagram.activity.ActivityDiagramGraph"> 
+  <void method="addNode"> 
+   <object id="ActivityNode0" class="com.horstmann.violet.product.diagram.activity.ActivityNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>JSON message</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>345.0</double> 
+     <double>158.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ActivityNode1" class="com.horstmann.violet.product.diagram.activity.ActivityNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>Javascript tree render</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>304.0</double> 
+     <double>243.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ActivityNode2" class="com.horstmann.violet.product.diagram.activity.ActivityNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>create mol struc. image
+based on InchI</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>564.0</double> 
+     <double>250.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ActivityNode3" class="com.horstmann.violet.product.diagram.activity.ActivityNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>Draw spectrum</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>272.0</double> 
+     <double>346.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ActivityNode4" class="com.horstmann.violet.product.diagram.activity.ActivityNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>draw tree</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>424.0</double> 
+     <double>353.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.product.diagram.activity.ActivityTransitionEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+   </object> 
+   <object idref="ActivityNode2"/> 
+   <object idref="ActivityNode1"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.product.diagram.activity.ActivityTransitionEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+   </object> 
+   <object idref="ActivityNode1"/> 
+   <object idref="ActivityNode2"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.product.diagram.activity.ActivityTransitionEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+   </object> 
+   <object idref="ActivityNode0"/> 
+   <object idref="ActivityNode1"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.product.diagram.activity.ActivityTransitionEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+   </object> 
+   <object idref="ActivityNode4"/> 
+   <object idref="ActivityNode1"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.product.diagram.activity.ActivityTransitionEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+   </object> 
+   <object idref="ActivityNode1"/> 
+   <object idref="ActivityNode4"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.product.diagram.activity.ActivityTransitionEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+   </object> 
+   <object idref="ActivityNode1"/> 
+   <object idref="ActivityNode3"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.product.diagram.activity.ActivityTransitionEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+   </object> 
+   <object idref="ActivityNode3"/> 
+   <object idref="ActivityNode1"/> 
+  </void> 
+ </object> 
+</java> 
