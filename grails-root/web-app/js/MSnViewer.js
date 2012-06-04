@@ -166,10 +166,7 @@ function inchi2ImageURL(inchi) {
 	// change a inch to the right url of the webservice
 	var url = '';
 	if (inchi !== undefined) {
-//		var server = 'http://www.metitree.nl:8080/inchi2image/rs/image/png/';
-//		var server = 'http://109.237.216.213:8080/inchi2image/rs/image/png/';
-		var server = 'http://www.metitree.nl/inchi2image/png/';
-		//inchi = replaceAll(inchi, '/', '_');
+		var server = 'http://localhost/inchi2image/png/';
 		url = server + inchi;
 	}
 	return (url);
