@@ -6,6 +6,10 @@ import oasa
 import os
 import web
 
+__author__ = "Tim te Beek"
+__contact__ = "brs@nbic.nl"
+__copyright__ = "Copyright 2012, Netherlands Bioinformatics Centre"
+
 URLS = ('/(svg|png)/(InChI=.*)', 'Server')
 
 

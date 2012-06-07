@@ -2,6 +2,10 @@
 import oasa
 import sys
 
+__author__ = "Tim te Beek"
+__contact__ = "brs@nbic.nl"
+__copyright__ = "Copyright 2012, Netherlands Bioinformatics Centre"
+
 
 def convert_ichi_to_key(inchi):
     """Convert inchi to inchi key."""

@@ -3,6 +3,10 @@ import oasa
 import sys
 import tempfile
 
+__author__ = "Tim te Beek"
+__contact__ = "brs@nbic.nl"
+__copyright__ = "Copyright 2012, Netherlands Bioinformatics Centre"
+
 
 def convert_ichi_to_image(inchi, contenttype='png'):
     """Convert a inchi to an image in both svg and png."""
