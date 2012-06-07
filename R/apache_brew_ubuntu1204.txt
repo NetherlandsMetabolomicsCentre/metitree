@@ -1,0 +1,25 @@
+# All Apache modules are loaded this way. The most important thing to
+# remember is that the string "R_module" is case sensitive, so get it
+# right in the config file.
+
+LoadModule R_module           /usr/lib/apache2/modules/mod_R.so
+
+# Place this in the config file to turn error messages into HTML which
+# are printed in the browser. Without this, all warning and error messages
+# are printed to the Apache error log file.
+
+ROutputErrors
+
+# Any file under /var/www/brew is passed through the function brew located in
+# the package brew.
+
+<Directory /var/www/brew>
+        SetHandler r-script
+        RHandler brew::brew
+	DefaultType text/html
+</Directory>
+
+# Prints out a nice report about R running within Apache
+<Location /RApacheInfo>
+        SetHandler r-info
+</Location>
