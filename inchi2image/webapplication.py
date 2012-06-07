@@ -10,8 +10,6 @@ __author__ = "Tim te Beek"
 __contact__ = "brs@nbic.nl"
 __copyright__ = "Copyright 2012, Netherlands Bioinformatics Centre"
 
-URLS = ('/(svg|png)/(InChI=.*)', 'Server')
-
 
 class Server(object):
     """Class to serve svg or png images of InChI structures."""
@@ -28,6 +26,9 @@ class Server(object):
             response = open(imagefile, 'rb').read()
             #Clean up the file
             os.remove(imagefile)
+            #Set correct contenttype based on contenttype
+            web.header('Content-Type', self.typeheaders[contenttype])
+            return response
         except (oasa.oasa_exceptions.oasa_error, IOError) as err:
             #Handle errors that might have been raised in the above code
             if contenttype == 'png':
@@ -38,9 +39,7 @@ class Server(object):
             else:
                 raise web.webapi.internalerror(err)
 
-        #Set correct contenttype based on contenttype
-        web.header('Content-Type', self.typeheaders[contenttype])
-        return response
+URLS = ('/(svg|png)/(InChI=.*)', Server)
 
 if __name__ == "__main__":
     #web.config.debug = False

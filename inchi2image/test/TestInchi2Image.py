@@ -44,6 +44,15 @@ class TestClass(unittest.TestCase):
         #More complex
         self.assertEqual('PEFASEPMJYRQBW-HKWQTAEVSA-N', convert_ichi_to_key(self.complex))
 
+    def testServer(self):
+        '''Test web.py application works as expected.'''
+        from inchi2image.webapplication import URLS
+        import web
+        app = web.application(URLS, globals())
+        response = app.request('/')
+        self.assertEqual('404 Not Found', response.status)
+        print app.request('/svg/' + self.ethanol)
+
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
