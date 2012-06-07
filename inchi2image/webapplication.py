@@ -15,8 +15,6 @@ class Server(object):
 
     def GET(self, contenttype, inchi):
         """Get image for inchikey"""
-        #Sample inchi for ethanol: InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3
-        #Sample inchi with error (sub,sup): InChI=1/C2H5NS/c3-1-2-4/h1,3-4H,2H2/p+1
 
         try:
             #Create structure from Inchi in OASA
@@ -53,6 +51,3 @@ if __name__ == "__main__":
     APP = web.application(URLS, globals())
     APP.run()
 
-#To run this app through Apache mod_wsgi enable the following two lines
-APP = web.application(URLS, globals(), autoreload = False)
-application = APP.wsgifunc()
