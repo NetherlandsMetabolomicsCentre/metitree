@@ -1,7 +1,7 @@
 // ****** Metitree Config ******
 
 //image url for chemical structures
-metitree.chemicalstructure.inchi = "http://localhost/inchi2image/png/"
+metitree.chemicalstructure.inchi = "http://localhost:8090/png/"
 
 // ConfigurationHolder.config.metitree.x
 metitree.processing.jobs.parallel.max 	= 1		// maximum number of jobs that can run parallel over all users (0 = unlimited > kill your server)
