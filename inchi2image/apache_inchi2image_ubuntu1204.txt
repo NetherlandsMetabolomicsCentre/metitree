@@ -1,0 +1,10 @@
+
+# make inchi2image available under Apache 
+WSGIScriptAlias /inchi2image /var/www/inchi2image/webapplication.py
+
+AddType text/html .py
+
+<Directory /var/www/inchi2image/python/>
+    Order deny,allow
+    Allow from all
+</Directory>
