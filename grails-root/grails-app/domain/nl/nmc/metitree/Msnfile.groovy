@@ -93,8 +93,6 @@ class Msnfile {
 	
 	def storeFingerprints(){
 		
-		try {
-		
 			if (!this.isCML()){
 				return false // we can only add fingerprints from a CML file
 			}
@@ -142,9 +140,6 @@ class Msnfile {
 					tree.addToFeatures(feature)
 				}
 			}
-		} catch (e) {
-			log.error(e)
-		}
 							
 		return true
 		
