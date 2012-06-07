@@ -1,10 +1,16 @@
+#!/usr/bin/env python
 import oasa
 import sys
 
-def convert_ichi_to_image(inchi):
-	#InChI=1S/C33H40O19/c1-10-19(36)23(40)26(43)31(47-10)46-9-17-21(38)25(42)28(45)33(51-17)52-30-22(39)18-15(35)7-14(49-32-27(44)24(41)20(37)11(2)48-32)8-16(18)50-29(30)12-3-5-13(34)6-4-12/h3-8,10-11,17,19-21,23-28,31-38,40-45H,9H2,1-2H3/t10-,11-,17+,19-,20-,21-,23+,24+,25-,26+,27+,28+,31+,32-,33-/m0/s1
-	key = oasa.inchi_key.key_from_inchi( inchi)
-	print key
+__author__ = "Tim te Beek"
+__contact__ = "brs@nbic.nl"
+__copyright__ = "Copyright 2012, Netherlands Bioinformatics Centre"
+
+
+def convert_ichi_to_key(inchi):
+    """Convert inchi to inchi key."""
+    #inchi = 'InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3'
+    return oasa.inchi_key.key_from_inchi(inchi)
 
 if __name__ == "__main__":
-	convert_ichi_to_image(sys.argv[1])
+    print convert_ichi_to_key(sys.argv[1])
