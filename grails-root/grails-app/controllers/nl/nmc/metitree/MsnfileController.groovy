@@ -343,7 +343,7 @@ class MsnfileController {
 		
 		if (params.comments && params.msnfile){
 			def msnfile = Msnfile.get(params.msnfile)
-			if (msnfile.member.id == session.usergroup.id)  { //only owner of files can update the information of an msnfile												
+			if (msnfile.member.usergroup.id == session.usergroup.id)  { //only owner of files can update the information of an msnfile												
 				msnfile.comments = params.comments
 				msnfile.save()
 			}
@@ -352,17 +352,4 @@ class MsnfileController {
 		//return to where you came from...
 		redirect(url: request.getHeader('Referer'))
 	}
-	
-//	def demo = {
-//				
-//			def reqURLTokens = "${request.getRequestURL()}".tokenize('/')
-//		
-//			def msnFile = Msnfile.get(1)
-//			def msnfileLink = "http://${reqURLTokens[1]}/${reqURLTokens[2]}"
-//			
-//			def msnfilePathArray = msnFile.location.tokenize("/")
-//			msnfileLink += "/files/usergroup/${msnfilePathArray[-4]}/directories/${msnfilePathArray[-2]}/${msnFile.filename}"
-//			render "Actual link is: " + msnfileLink
-//			
-//	}
 }

@@ -183,6 +183,8 @@ class CmlService {
 		{
 			long currentMilliSecond = System.currentTimeMillis()
 			double diff = currentMilliSecond-startMilliSecond
+			log.info ("Thread ${thread} running for ${diff/1000} seconds")
+			Thread.sleep( 15000 )
 			if(diff > threadTimeLimit)
 			{
 				log.error ("Thread was killed!")

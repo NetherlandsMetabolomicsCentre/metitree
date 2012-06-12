@@ -1,6 +1,8 @@
 package nl.nmc.metitree
 
 class AuthController {
+
+	def mconfService
 	
 	def index = {
 		redirect(action: 'login')
@@ -10,21 +12,19 @@ class AuthController {
 
 		// see if a member entered any valid credentials
 		if (params.username && params.password){
-			
+				
 			//check if valid
 			def member = Member.findByUsernameAndPassword(params.username, "${params.password}".encodeAsMD5())
-			
+		
 			if (member){
 				session.member = member
 				session.usergroup = member.usergroup
 				
 				// redirect to home page
 				redirect(controller:'page', action:'data')
-				
 				return false //make sure we don't do anything after that!
 			}
 		}
-		
 	}
 	
 	def logout = {

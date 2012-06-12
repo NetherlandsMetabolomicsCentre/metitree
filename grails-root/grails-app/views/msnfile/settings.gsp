@@ -17,11 +17,11 @@
 		
 					<div class="bordered">				
 						<b>Peak picking settings</b><tt:simple code="page.settings.peakpicking" /><br />
-				        MZ gap (bin size) : <input type="text" name="settings_mzgap" value="${settings.mzgap ? settings.mzgap : 5}"> <small>(5 e.g 0.5 m/z)</small><br />	        
+				        MZ gap (bin size as m/z) : <input type="text" name="settings_mzgap" value="${settings.mzgap ? settings.mzgap : 5}"> m/z <small>(5 e.g 0.5 m/z)</small><br />	        
 				        Signal to noise threshold : 
 				        <select name="settings_snthresh">
 							<g:each in="${snthreshs}" var="snthresh"><option ${(settings.snthresh.toString() == snthresh.toString()) ? "selected=selected" : ""} value="${snthresh}">${snthresh}</option></g:each>
-						</select><br />
+						</select> %<br />
 				    </div>
 			        
 			        <div class="bordered">
@@ -33,7 +33,7 @@
 					</div>
 					
 					<div class="bordered">
-						<b>Mass accuracy settings</b><tt:simple code="page.settings.accuracy" /><br />
+						<b>Mass accuracy settings</b> (ppm)<tt:simple code="page.settings.accuracy" /><br />
 				        <g:each in="${levels}" var="level">     
 							MS Level ${level} : 
 							<select name="settings_accuracy-L${level}">			    

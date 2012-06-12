@@ -12,19 +12,18 @@
     </head>
     <body>
      	<div class="page">   
-	        		    		
-			<div style="font-size: 13px; text-align: right; padding-right: 25px; min-width: 400px;">
-				<g:if test="${session?.member?.name}">
+       		<g:if test="${session?.member?.name}">
+				<div style="font-size: 13px; text-align: right; padding-right: 25px; min-width: 400px;">
 					<g:message code="common.label.welcome" /> <b>${session.member.name}</b> (${session.usergroup.name})<b> - 
-					<g:link controller="auth" action="logout"><g:message code="common.label.logout" /></g:link></b> - 
-				</g:if>
-				<a href="${resource(dir:'documentation',file:'howto.pdf')}">help <img height="13px" class="borderless" src="${resource(dir:'images',file:'pdf.gif')}" alt="help" /></a>
-			</div>	        
- 		    <div class="logo">
-	        	<g:link url="${resource(dir:'')}">          			        		
-	        		<img class="borderless" src="${resource(dir:'images',file:'logo_metitree.png')}" alt="metItreeDB" />
-	        	</g:link>	    		
-	        </div>	    		
+					<g:link controller="auth" action="logout"><g:message code="common.label.logout" /></g:link></b><br />
+					<g:if test="${session?.member?.name == 'anonymous'}">
+				    	<font size="1.2em" color="red">
+				    		Please do not save private data in this account since access is open to anyone!
+			    		</font>
+					</g:if>
+				</div>		    	
+			</g:if>
+	    	<div style="margin-left: 22px; font: 39px verdana, arial, helvetica, sans-serif;">Metitree</div>		    	
 			<g:render template="/common/menu" />							         				       		
 			<g:layoutBody />											
 			<g:render template="/common/footer" />

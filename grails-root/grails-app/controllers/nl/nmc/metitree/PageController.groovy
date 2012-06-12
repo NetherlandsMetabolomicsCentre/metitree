@@ -11,6 +11,10 @@ class PageController {
 		return false
 	}
 	
+	def help = {
+		redirect(url: "${resource(dir:'')}/documentation/howto.pdf")
+	}
+	
 	def data = {
 		[ directories: Directory.findAllByUsergroup(session.member.usergroup) ]
 	}

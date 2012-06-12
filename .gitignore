@@ -1,0 +1,5 @@
+grails-root/target/classes
+grails-root/web-app/files/usergroup
+grails-root/bin
+grails-root/web-app/images/compounds
+org.eclipse.wst.common.project.facet.core.xml

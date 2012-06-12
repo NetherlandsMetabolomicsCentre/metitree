@@ -17,7 +17,8 @@ class BootStrap {
 			// WITH LIMITED ACCESS
 			def demoUserGroup =	new Usergroup(name: "Demo Usergroup", website: "http://www.demo.com", address: "").save(flush: true)
 			def demo = new Member(usergroup: demoUserGroup, name:"Mr. D. Emo", username:"demo", email:"user@demo.com", password:"demo".encodeAsMD5(), admin: false).save()
-			def admin = new Member(usergroup: demoUserGroup, name:"Mrs. A. min", username:"admin", email:"admin@demo.com", password:"admin".encodeAsMD5(), admin: true).save()
+			def anonymous = new Member(usergroup: demoUserGroup, name:"anonymous", username:"anonymous", email:"anonymous@metitree.nl", password:"anonymous".encodeAsMD5(), admin: false).save()
+			//def admin = new Member(usergroup: demoUserGroup, name:"Mrs. A. min", username:"admin", email:"admin@demo.com", password:"admin".encodeAsMD5(), admin: true).save()
 		}
 		/* ----------------------------------------------------------------------------------------- */
 	}

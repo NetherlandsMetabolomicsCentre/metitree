@@ -6,7 +6,6 @@ import java.util.concurrent.TimeUnit
 
 class ImportController {
 	
-	def mconfService
 	def jsonService
 	def csvService
 	def pdfService

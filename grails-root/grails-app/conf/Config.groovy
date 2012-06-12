@@ -1,14 +1,16 @@
 // ****** Metitree Config ******
 
 //image url for chemical structures
-metitree.chemicalstructure.inchi = "http://localhost:8090/png/"
+//metitree.chemicalstructure.inchi = "http://localhost:8090/png/"
+metitree.chemicalstructure.inchi = "http://www.metitree.nl/inchi2image/png/"
 
 // ConfigurationHolder.config.metitree.x
+metitree.security.enabled				= false // by default this is set to false to run Metitree in Demo mode
 metitree.processing.jobs.parallel.max 	= 1		// maximum number of jobs that can run parallel over all users (0 = unlimited > kill your server)
 metitree.processing.jobs.threads.max 	= 1		// maximum number of threads per job
-metitree.processing.jobs.max.execution	= 30 * 60 * 1000 // job may run no longer than 30 minutes
-metitree.processing.cml.occurrence	= 0.4	// node occurrence in tree(s) to fit in master tree
-metitree.msnfiles.temp.location		= "temp" // name of temp storage of a usergroup
+metitree.processing.jobs.max.execution	= 3 * 60 * 1000 // job may run no longer than 3 minutes
+metitree.processing.cml.occurrence		= 0.4	// node occurrence in tree(s) to fit in master tree
+metitree.msnfiles.temp.location			= "temp" // name of temp storage of a usergroup
 // ****** Metitree Config ******
 
 
@@ -60,9 +62,9 @@ grails.spring.bean.packages = []
 // set per-environment serverURL stem for creating absolute links
 environments {
 	development {
-		grails.serverURL 	= "http://localhost:8081/metitree"
+		grails.serverURL 	= "http://localhost:8080/metitree"
 		grails.config.myip 	= "localhost"
-		grails.config.myport 	= "8081"
+		grails.config.myport 	= "8080"
 		grails.rapache.url 	= "http://localhost/brew"
 	}
 }
