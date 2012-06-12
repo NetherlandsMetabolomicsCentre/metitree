@@ -16,8 +16,7 @@
 		    	</table>
 		    	<br />
 		    	<font size="1.2em" color="red">
-		    		To access the demo account please enter <b>demo</b> as your username and <b>demo</b> as the password.<br />
-		    		Please do not save private data in this account since access is open to anyone!
+		    		You can try Metitree anonymously <g:link controller="page" action="data">here</g:link>. Please do not save private data in this account since access is open to anyone!
 		    	</font>	    	
 		    </g:form>
 		</div>	  

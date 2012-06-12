@@ -1,8 +1,7 @@
 // ****** Metitree Config ******
 
 //image url for chemical structures
-//metitree.chemicalstructure.inchi = "http://localhost:8090/png/"
-metitree.chemicalstructure.inchi = "http://www.metitree.nl/inchi2image/png/"
+metitree.chemicalstructure.inchi = "http://localhost:8090/png/"
 
 // ConfigurationHolder.config.metitree.x
 metitree.security.enabled				= false // by default this is set to false to run Metitree in Demo mode
