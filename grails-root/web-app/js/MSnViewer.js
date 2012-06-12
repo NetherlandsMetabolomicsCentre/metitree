@@ -166,7 +166,7 @@ function inchi2ImageURL(inchi) {
 	// change a inch to the right url of the webservice
 	var url = '';
 	if (inchi !== undefined) {
-		var server = 'http://localhost/inchi2image/png/';
+		var server = 'http://localhost:8090/png/';
 		url = server + inchi;
 	}
 	return (url);

@@ -14,7 +14,7 @@
      	<div class="page">   
        		<g:if test="${session?.member?.name}">
 				<div style="font-size: 13px; text-align: right; padding-right: 25px; min-width: 400px;">
-					<g:message code="common.label.welcome" /> <b>${session.member.name}</b> (${session.usergroup.name})<b> - 
+					<g:message code="common.label.welcome" /> <b>${session.member.name}</b> <g:if test="${session?.member?.name != 'anonymous'}">(${session.usergroup.name})</g:if><b> - 
 					<g:link controller="auth" action="logout"><g:message code="common.label.logout" /></g:link></b><br />
 					<g:if test="${session?.member?.name == 'anonymous'}">
 				    	<font size="1.2em" color="red">
