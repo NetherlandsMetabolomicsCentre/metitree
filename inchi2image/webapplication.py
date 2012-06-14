@@ -18,7 +18,7 @@ class Server(object):
 
         try:
             #Create structure from Inchi in OASA
-	    	mol = oasa.inchi.text_to_mol(str(inchi), calc_coords = 1, include_hydrogens = False)
+            mol = oasa.inchi.text_to_mol(str(inchi), calc_coords = 1, include_hydrogens = False)
             mol.normalize_bond_length(30)
             mol.remove_unimportant_hydrogens()
             cairo_object = oasa.cairo_out.cairo_out(color_bonds = True, color_atoms = True)
@@ -34,7 +34,7 @@ class Server(object):
             response = open(imagefile, 'rb').read()
             os.remove(imagefile)
         except (oasa.oasa_exceptions.oasa_error, IOError) as err:
-			web.header('Content-Type', 'image/png')
+            web.header('Content-Type', 'image/png')
             return open('not-found.png', 'rb').read()
 
         #Set correct contenttype based on contenttype
