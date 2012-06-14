@@ -36,7 +36,7 @@ class RapacheService {
 
 		def getUrl = "${config.grails.rapache.url}/csv2pdfJob?"
 			getUrl += "urlCsv=${encodedcsvfileLink}"
-			getUrl += "&title=${csvFile?.compound()?.inchi ?: ''}"
+			getUrl += "&title=${csvFile?.compound()?.inchi ?: ''}"		
 			getUrl += "&compoundname=${csvFile?.compound()?.name ?: ''}"
 			
 		def pdfLocation = ("${new URL(getUrl).text}" as String).replaceAll("\n", "").replaceAll(" ", "")

@@ -45,20 +45,24 @@ class Compound {
 	def fetchImage(){
 		// compound.image ?: fetch >> cache
 		if (this.inchi){
-			def applicationLoc = ApplicationHolder.getApplication().getParentContext().getResource("/").getFile().toString()
-			new File("${applicationLoc}/images/compounds").mkdirs()
-			try {
-				
-				def urlToDownload 		= "${config.metitree.chemicalstructure.inchi}${this.inchi}" as String
-				def imageDestination 	= "${applicationLoc}/images/compounds/${this.inchi.encodeAsMD5()}.png" as String
+		
+			def applicationLoc = ApplicationHolder.getApplication().getParentContext().getResource("/").getFile().toString()		
+			def imageDestination = "${applicationLoc}/images/compounds/${this.inchi.encodeAsMD5()}.png" as String
 
-				def file = new FileOutputStream(imageDestination)
-				def out = new BufferedOutputStream(file)
-				out << new URL(urlToDownload).openStream()
-				out.close()
-				
-			} catch (e) {
-				log.error e
+			if (!new File(imageDestination).exists()){ //only render files that do not exist yet
+				new File("${applicationLoc}/images/compounds").mkdirs()
+				try {
+					
+					def urlToDownload 		= "${config.metitree.chemicalstructure.inchi}${this.inchi}" as String
+	
+					def file = new FileOutputStream(imageDestination)
+					def out = new BufferedOutputStream(file)
+					out << new URL(urlToDownload).openStream()
+					out.close()
+					
+				} catch (e) {
+					log.error e
+				}
 			}
 		}
 	}
@@ -78,16 +82,16 @@ class Compound {
 				log.error(e)
 			}
 
-	
 			try { // try to fetch a ChemSpiderID from Chemspider
-				new XmlSlurper().parseText(new URL("http://www.chemspider.com/InChI.asmx/InChIKeyToCSID?inchi_key=" + inchiKey.encodeAsURL()).openConnection().content.text).each { chemspiderId = it as String }
+				new XmlSlurper().parseText(new URL("http://www.chemspider.com/InChI.asmx/InChIToCSID?inchi=" + inchi.encodeAsURL()).openConnection().content.text).each { chemspiderId = it as String }
+				if (!chemspiderId){ new XmlSlurper().parseText(new URL("http://www.chemspider.com/InChI.asmx/InChIKeyToCSID?inchi_key=" + inchiKey.encodeAsURL()).openConnection().content.text).each { chemspiderId = it as String } }
 			} catch(e){
 				log.error(e)
 			}
 	
 			try { // try to fetch title of Chemspider page to use as name of compound
 				if(chemspiderId){
-					strChemspiderCompoundName = (new URL('http://www.chemspider.com/Chemical-Structure.' + chemspiderId + '.html').openConnection().content.text.split('<title>')[1].split('</title>')[0]).replace('|', ':').split(':')[1]
+					strChemspiderCompoundName = ((new URL('http://www.chemspider.com/Chemical-Structure.' + chemspiderId + '.html').openConnection().content.text.split('<title>')[1].split('</title>')[0]).replace('|', ':').split(':')[0]).replaceAll("\r\n|\n\r|\n|\r|\t","")
 				}
 			} catch(e){
 				log.error(e)

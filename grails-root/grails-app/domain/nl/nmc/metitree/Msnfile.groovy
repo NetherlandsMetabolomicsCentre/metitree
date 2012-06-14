@@ -155,7 +155,6 @@ class Msnfile {
 		try {							
 
 			if (!Tree.findByMsnfile(this)){ 
-				log.info("No Tree found. Try to generate it.")
 				//add the tree + fingerprints to the database first
 				if (!this.storeFingerprints()){
 					return false //must not add file to the database of which we have no fingerprints

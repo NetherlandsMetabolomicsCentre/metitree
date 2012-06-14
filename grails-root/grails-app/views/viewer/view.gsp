@@ -17,6 +17,7 @@ min. m/z: <input type="text" id="min" name="min">&nbsp;max. m/z: <input type="te
 <input type="button" name="show_all" value="reset filter" class="button" onclick="drawing_${nameTree}.DrawFullSpectraOnCurrentView()" /> - 
 <input type="button" name="show_cum" value="cumalitive spectra" class="button" onclick="drawing_${nameTree}.DrawCumulativeSpectra()" />
 <br/>
+<h2>Spectrum (x-axis: m/z, y-axis: absolute intensity)</h2>
 </div>
 <div id="${nameTree}"></div>
 </body>
