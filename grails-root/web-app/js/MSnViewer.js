@@ -751,11 +751,12 @@ structureLocationInNeutralLoss    ) {
 		var structureImage = new Image();
 
 		structureImage.onerror = function() {
-			structureRapheal = self.paper.rect(x, y, width, height).attr({
-				fill: 'none',
-				stroke: '#666',
-				'stroke-dasharray' : '- '
-			});
+			//structureRapheal = self.paper.rect(x, y, width, height).attr({
+			//	fill: 'none',
+			//	stroke: '#000',
+			//	'stroke-dasharray' : '- '
+			//});
+			structureRapheal = self.paper.image("http://localhost:8090/png/InChI=1S/C", x, y, width, height);
 			self.neutralLoss[structureLocationInNeutralLoss] = structureRapheal;
 			self.paper.safari();
 
@@ -798,11 +799,12 @@ structureLocationInNeutralLoss    ) {
 
 			} else {
 
-				structureRapheal = self.paper.rect(x, y, width, height).attr({
-					fill: 'none',
-					stroke: '#666',
-					'stroke-dasharray' : '- '
-				});
+				//structureRapheal = self.paper.rect(x, y, width, height).attr({
+				//	fill: 'none',
+				//	stroke: '#777',
+				//	'stroke-dasharray' : '- '
+				//});
+				structureRapheal = self.paper.image("http://localhost:8090/png/InChI=1S/C", x, y, width, height);
 				self.paper.safari();
 
 				self.neutralLoss[structureLocationInNeutralLoss] = structureRapheal;
@@ -813,11 +815,12 @@ structureLocationInNeutralLoss    ) {
 
 	} else {
 		//Draw a rectangle when inchi is not valid
-		structureRapheal = this.paper.rect(x, y, width, height, 5).attr({
-			fill: 'none',
-			stroke: '#666',
-			'stroke-dasharray' : '- '
-		});
+		//structureRapheal = this.paper.rect(x, y, width, height, 5).attr({
+		//	fill: 'none',
+		//	stroke: '#888',
+		//	'stroke-dasharray' : '- '
+		//});
+		structureRapheal = self.paper.image("http://localhost:8090/png/InChI=1S/C", x, y, width, height);
 		this.neutralLoss[structureLocationInNeutralLoss] = structureRapheal;
 
 	}
