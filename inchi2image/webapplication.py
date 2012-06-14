@@ -18,7 +18,7 @@ class Server(object):
 
         try:
             #Create structure from Inchi in OASA
-	    	mol = oasa.inchi.text_to_mol(str(inchi), calc_coords = 1, include_hydrogens = False)
+	    mol = oasa.inchi.text_to_mol(str(inchi), calc_coords = 1, include_hydrogens = False)
             mol.normalize_bond_length(30)
             mol.remove_unimportant_hydrogens()
             cairo_object = oasa.cairo_out.cairo_out(color_bonds = True, color_atoms = True)

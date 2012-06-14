@@ -7,12 +7,6 @@ ServerName localhost
 
 LoadModule R_module           /usr/lib/apache2/modules/mod_R.so
 
-# Place this in the config file to turn error messages into HTML which
-# are printed in the browser. Without this, all warning and error messages
-# are printed to the Apache error log file.
-
-ROutputErrors
-
 # Any file under /var/www/brew is passed through the function brew located in
 # the package brew.
 
