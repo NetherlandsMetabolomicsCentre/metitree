@@ -40,7 +40,7 @@ class ImportController {
 						uploadedfile.transferTo(zipFile)
 						
 						def usergroup 		= session.member.usergroup
-						def member		= session.member
+						def member			= session.member
 						def strDirectory	= params.directory ?: 'import'
 						def directory		= Directory.findByUsergroupAndName(usergroup, strDirectory) ?: new Directory(usergroup: usergroup, name: strDirectory).save()
 						def strDatabase		= params.database ?: 'importDb'
@@ -84,7 +84,7 @@ class ImportController {
 								// get mzxml used to produce CML
 								if (settings['nmc:parentFile']){
 									
-									filenameMzXml = settings['nmc:parentFile'].tokenize("/")[-1]
+									filenameMzXml = "${settings['nmc:parentFile'].tokenize("/")[-1]}".toLowerCase()
 
 									mzXml = Msnfile.findByDirectoryAndName(directory, filenameMzXml)
 													
