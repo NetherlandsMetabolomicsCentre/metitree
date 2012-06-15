@@ -3,3 +3,4 @@ grails-root/web-app/files/usergroup
 grails-root/bin
 org.eclipse.wst.common.project.facet.core.xml
 stacktrace.log
+metitree.war
