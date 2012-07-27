@@ -38,13 +38,21 @@ class RapacheService {
 			getUrl += "urlCsv=${encodedcsvfileLink}"
 			getUrl += "&title=${csvFile?.compound()?.inchi ?: ''}"		
 			getUrl += "&compoundname=${csvFile?.compound()?.name ?: ''}"
-			
+		
+		println "getUrl : ${getUrl}"
+	
+		println "contents of new Url: ${new URL(getUrl).text}"
+
 		def pdfLocation = ("${new URL(getUrl).text}" as String).replaceAll("\n", "").replaceAll(" ", "")
 		
+		println "pdfLocation : ${pdfLocation}"
+
 		def tempPDF = new File(pdfLocation)
 
 		try {
-			new File("${pdfFile.location}") << tempPDF?.text ?: ''
+			def ant = new AntBuilder()
+			ant.copy(file: tempPDF, tofile: new File("${pdfFile.location}"), overwrite: true)
+
 			tempPDF.setWritable(true, false)
 			tempPDF.delete() //remove the tempPDF file
 		} catch (e) {
