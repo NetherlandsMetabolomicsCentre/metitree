@@ -54,7 +54,7 @@ class RapacheService {
 			tempPDF.setWritable(true, false)
 			tempPDF.delete() //remove the tempPDF file
 		} catch (e) {
-			log.error("ERROR IN PDF GENERATOR: ${e.message}")
+			log.error(e.message)
 		}
 		return true
 		
