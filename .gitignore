@@ -4,3 +4,5 @@ grails-root/bin
 org.eclipse.wst.common.project.facet.core.xml
 stacktrace.log
 metitree.war
+grails-root/target-eclipse
+grails-root/.settings

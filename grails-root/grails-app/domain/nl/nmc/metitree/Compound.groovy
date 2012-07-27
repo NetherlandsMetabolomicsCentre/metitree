@@ -32,9 +32,9 @@ class Compound {
 	
 	String getImageUrl(){
 		if (this.inchi){
-			return config.grails.serverURL + "/images/compounds/" + this.inchi.encodeAsMD5() + ".png" 
+			return "${config.grails.serverURL}/images/compounds/${this.inchi.encodeAsMD5()}.png" 
 		} else {
-			return config.grails.serverURL + "/images/compounds/unknown.png"
+			return "${config.grails.serverURL}/images/compounds/unknown.png"
 		}
 	}
 	
