@@ -39,14 +39,8 @@ class RapacheService {
 			getUrl += "&title=${csvFile?.compound()?.inchi ?: ''}"		
 			getUrl += "&compoundname=${csvFile?.compound()?.name ?: ''}"
 		
-		println "getUrl : ${getUrl}"
-	
-		println "contents of new Url: ${new URL(getUrl).text}"
-
 		def pdfLocation = ("${new URL(getUrl).text}" as String).replaceAll("\n", "").replaceAll(" ", "")
 		
-		println "pdfLocation : ${pdfLocation}"
-
 		def tempPDF = new File(pdfLocation)
 
 		try {
