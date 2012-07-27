@@ -38,10 +38,14 @@ class RapacheService {
 			getUrl += "urlCsv=${encodedcsvfileLink}"
 			getUrl += "&title=${csvFile?.compound()?.inchi ?: ''}"		
 			getUrl += "&compoundname=${csvFile?.compound()?.name ?: ''}"
+			
+		log.info("URL to build PDF: ${getUrl}")
 		
 		def pdfLocation = ("${new URL(getUrl).text}" as String).replaceAll("\n", "").replaceAll(" ", "")
 		
 		def tempPDF = new File(pdfLocation)
+		
+		log.info("Location of tempPDF: ${pdfLocation}")
 
 		try {
 			def ant = new AntBuilder()
@@ -50,7 +54,7 @@ class RapacheService {
 			tempPDF.setWritable(true, false)
 			tempPDF.delete() //remove the tempPDF file
 		} catch (e) {
-			log.error e
+			log.error("ERROR IN PDF GENERATOR: ${e.message}")
 		}
 		return true
 		
