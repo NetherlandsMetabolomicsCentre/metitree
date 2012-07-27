@@ -59,14 +59,10 @@ grails.logging.jul.usebridge = true
 grails.spring.bean.packages = []
 
 // set per-environment serverURL stem for creating absolute links
-environments {
-	development {
-		grails.serverURL 	= "http://localhost:8080/metitree"
-		grails.config.myip 	= "localhost"
-		grails.config.myport 	= "8080"
-		grails.rapache.url 	= "http://localhost/brew"
-	}
-}
+grails.serverURL 	= "http://localhost:8080/metitree"
+grails.config.myip 	= "localhost"
+grails.config.myport 	= "8080"
+grails.rapache.url 	= "http://localhost/brew"
 
 grails.resources.modules = {
 	overrides {
@@ -93,3 +89,12 @@ log4j = {
 			'net.sf.ehcache.hibernate'
 	warn   'org.mortbay.log'
 }
+
+// locations to search for config files that get merged into the main config
+// config files can either be Java properties files or ConfigSlurper scripts
+//
+grails.config.locations = [
+	// the external configuration to override the default
+	// configuration (e.g. ~/.metitree/ci.properties)
+	"file:${userHome}/.${appName}/${grails.util.GrailsUtil.environment}.properties"
+]
