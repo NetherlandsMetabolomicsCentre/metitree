@@ -23,7 +23,7 @@ class BootStrap {
 
 		if (!Usergroup.findByName("usrgrp")){
 			//def usrgrp = new Usergroup(name: "usrgrp", website: "http://www.metitree.nl", address: "").save(flush: true)
-			//def usr = new Member(usergroup: usergroup, name:"usr", username:"usrnm", email:"usr@metitree.nl", password:"usrpsswrd".encodeAsMD5(), admin: false).save()
+			//def usr = new Member(usergroup: usrgrp, name:"usr", username:"usrnm", email:"usr@metitree.nl", password:"usrpsswrd".encodeAsMD5(), admin: false).save()
 		}
 
 		/* ----------------------------------------------------------------------------------------- */
