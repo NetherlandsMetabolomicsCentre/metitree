@@ -18,7 +18,7 @@ class QueueRunnerJob {
     		ProcessJobQueue.list().each { j ->
     			if (j.processjob.lastStatus  != j.status) {
     		    		j.processjob.lastStatus = j.status
-    				j.processjob.save(flush: true)
+    				j.processjob.merge()
     			}
     		}
 
@@ -50,7 +50,7 @@ class QueueRunnerJob {
 
 						// change status to running to make sure we only run it once
 						processJobQueue.status = 1 // set to running
-						processJobQueue.save(flush: true) // force a save
+						processJobQueue = processJobQueue.merge()
 
 						try {
 							processService.runJob(job) // RUN !!!
@@ -58,14 +58,14 @@ class QueueRunnerJob {
 							processJobQueue.save() // force a save
 						} catch (e){
 							processJobQueue.status = 99 // set to error
-							processJobQueue.save(flush: true) // force a save
+							processJobQueue = processJobQueue.merge()
 							log.error("Was unable to execute job (${job})" + e)
 						}
 					} else {
 
 						// job inactive
 						processJobQueue.status = 11 // set to running
-						processJobQueue.save(flush: true) // force a save
+						processJobQueue = processJobQueue.merge()
 						log.info "Job is in-active, will not process."
 					}
 				}
