@@ -9,15 +9,15 @@ import net.sf.jniinchi.*;
 class MsnfileController {
 
 	def processService
-	
+
 	def config = ConfigurationHolder.config
-	
+
 	def download = {
-		
+
 		def msnFile = Msnfile.get(params.id)
-		
+
 		if (msnFile.member.usergroup.id == session.member.usergroup.id){
-		
+
 			def downloadFile = new File("${msnFile.location}")
 			if (downloadFile.exists()){
 				byte[] downloadBytes = downloadFile.readBytes()
@@ -30,7 +30,7 @@ class MsnfileController {
 			}
 		} else {
 			render 'access denied!'
-		}		
+		}
 	}
 
 	def add = {
@@ -91,17 +91,17 @@ class MsnfileController {
 		//return to where you came from...
 		redirect(url: request.getHeader('Referer'))
 	}
-	
+
 	def delete = {
-		
+
 		if (params.id){
 			def msnfile = Msnfile.get(params.id)
-			
+
 			if (session?.member?.id == msnfile.member?.id){
 				msnfile.active = false
 			}
 		}
-		
+
 		//return to where you came from...
 		redirect(url: request.getHeader('Referer'))
 	}
@@ -112,18 +112,18 @@ class MsnfileController {
 
 		//read contents of msnFile and pass it to the view
 		def msnFile = Msnfile.get(params.id)
-		
-		if (session.member.usergroup.id == msnFile.member.usergroup.id){	
-	
+
+		if (session.member.usergroup.id == msnFile.member.usergroup.id){
+
 			previewData['filename'] = "file${msnFile.id}"
-	
+
 			//determine extension if file
 			def fileExtension = msnFile.location.tokenize(".")[-1]
-	
+
 			switch (fileExtension) {
 				case 'pdf'		:	//set header to PDF output
 					def pdfFile = new File("${msnFile.location}")
-					byte[] pdfBytes = pdfFile.readBytes() 
+					byte[] pdfBytes = pdfFile.readBytes()
 					response.setContentType("application/pdf")
 					response.setHeader("Content-disposition", "attachment; filename=${msnFile.name}")
 					response.setContentLength(pdfBytes.length)
@@ -145,33 +145,33 @@ class MsnfileController {
 					break;
 				default			:	previewData['text'] = new File(msnFile.location).text
 			}
-	
+
 			[ msnFile: msnFile, previewData: previewData, serverUrl: "${config.grails.serverURL}" ]
 		} else {
 			render ("You are not authorized to view this file!")
 		}
-		
+
 	}
 
 
 	def settings = {
-		
+
 		def settings = [:]
-				
+
 		// check if we are using settings available in the database
 		if (params.Submit == 'Load' && params.availableSetting){
-						
+
 			def availableSettings = ProcessSettings.findByMemberAndId(session.member, params.availableSetting)
 			if (availableSettings){
 				settings = availableSettings.settingsmap
-				params.files = session.files 
+				params.files = session.files
 				params.directories = session.directories
 			}
 		}
-		
+
 		// fetch settings from post/get
 		if (params.Submit == 'Process'){
-			
+
 			params.each {
 				def paramSplit = it.key.split('_').toList()
 				if (paramSplit[0] == "settings"){
@@ -181,18 +181,18 @@ class MsnfileController {
 				}
 			}
 		}
-	
-		if (params.Submit == 'Process' && settings.size() >= 1 ) {		
+
+		if (params.Submit == 'Process' && settings.size() >= 1 ) {
 			session.settings = settings
 			redirect(action: 'process')
 
 		} else {
 
 			// save the files/directory settings in the session
-			if (params.files) { session.files = params.files }		
+			if (params.files) { session.files = params.files }
 			if (params.directories)	{ session.directories = params.directories }
-			
-			if ((session.files || session.directories)){			
+
+			if ((session.files || session.directories)){
 				return [ settings : settings, snthreshs: 10..1, levels: 1..5, accuracy: 1..50, availableSettings: ProcessSettings.findAllByMember(session.member) ]
 			} else {
 				// we can only process when there are files or directories selected!/
@@ -213,7 +213,7 @@ class MsnfileController {
 			/*
 			 ****************************************************************************
 			 *	JOB SETTINGS
-			 **************************************************************************** 
+			 ****************************************************************************
 			 */
 			def jsonSettings 		= (session.settings as JSON).toString()
 			def jsonSettingsHash 	= jsonSettings.encodeAsMD5()
@@ -225,7 +225,7 @@ class MsnfileController {
 			if (!jobSettings){
 
 				/*
-				 * create a new ProcessSettings entry 
+				 * create a new ProcessSettings entry
 				 */
 				jobSettings 				= new ProcessSettings()
 				jobSettings.member			= session.member
@@ -234,14 +234,14 @@ class MsnfileController {
 				jobSettings.save(flush: true)
 			}
 			//***************************************************************************
-			
-			
+
+
 			/*
 			 ****************************************************************************
 			 *	PROCESSJOB
 			 ****************************************************************************
 			 */
-			
+
 			job 			= new ProcessJob()
 			job.active		= true
 			job.member		= session.member
@@ -251,10 +251,10 @@ class MsnfileController {
 			 *  job can now be saved to database
 			 */
 			job.save(flush: true)
-			
+
 			//***************************************************************************
 
-			
+
 			/*
 			 ****************************************************************************
 			 *  PROCESSJOB FILES
@@ -267,9 +267,9 @@ class MsnfileController {
 					fileIds.add(session.files)
 				}
 				else {
-					session.files?.each { fileId -> 
+					session.files?.each { fileId ->
 						fileIds.add(fileId)
-					} 
+					}
 				}
 			}
 
@@ -282,27 +282,27 @@ class MsnfileController {
 					}
 				}
 			}
-			
+
 			job.fids = fileIds.join(', ')
 			job.report = "${new Date()} - Job queued\n"
 			job.save(flush: true)//force a save to be sure the files are linked!
-			
+
 			//***************************************************************************
 
-			
+
 			/*
 			 ****************************************************************************
 			 *  QUEUE PROCESSJOB
 			 ****************************************************************************
 			 */
-			job.queue() //jobs take too long to do it instantly, so we queue it!			
+			job.queue() //jobs take too long to do it instantly, so we queue it!
 			//***************************************************************************
 
 			// clear input from session when job is finished
 			session.files			= null
 			session.directories		= null
 			session.settings		= null
-			
+
 		} else {
 			//we should only be able to access this page with the required settings
 			redirect(action: 'settings')
@@ -312,43 +312,43 @@ class MsnfileController {
 		flash.message = 'Job settings were saved and the processing has been queued. On this page you will be able to track the progress of the job'
 		redirect(controller: 'processJob', action: 'details', id: job.id)
 	}
-	
+
 	def setinchi = {
-		
-		if (params.inchi && params.msnfile){
+
+		if (params.inchi != null && params.msnfile){
 			def msnfile = Msnfile.get(params.msnfile)
 			if (msnfile.member.usergroup.id == session.member.usergroup.id)  { //only usergroup members/owner of files can update the compound information of an msnfile
-								
+
 				//fetch compound, or create it
 				def compound = Compound.findByInchi(Compound.cleanInchi(params.inchi))
 				if (!compound){
 					compound = new Compound()
-					compound.name = 'unknown'					
-				} 
-				
+					compound.name = 'unknown'
+				}
+
 				compound.inchi = Compound.cleanInchi(params.inchi)
 				compound.save()
-				
+
 				//add compound to Msnfile
 				msnfile.compound = compound
 				msnfile.save()
 			}
 		}
-		
+
 		//return to where you came from...
-		redirect(url: request.getHeader('Referer'))		
+		redirect(url: request.getHeader('Referer'))
 	}
-	
+
 	def setcomments = {
-		
+
 		if (params.comments && params.msnfile){
 			def msnfile = Msnfile.get(params.msnfile)
-			if (msnfile.member.usergroup.id == session.usergroup.id)  { //only owner of files can update the information of an msnfile												
+			if (msnfile.member.usergroup.id == session.usergroup.id)  { //only owner of files can update the information of an msnfile
 				msnfile.comments = params.comments
 				msnfile.save()
 			}
 		}
-		
+
 		//return to where you came from...
 		redirect(url: request.getHeader('Referer'))
 	}
