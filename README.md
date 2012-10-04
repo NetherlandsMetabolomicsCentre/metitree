@@ -1,7 +1,7 @@
 Metitree
 ========
 
-A demo of Metitree is available at: http://www.metitree.nl:8080/metitree-public
+A demo of Metitree is available at: http://www.metitree.nl
 
 # History
 
